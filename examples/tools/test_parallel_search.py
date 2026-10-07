@@ -3,7 +3,7 @@
 import asyncio
 import json
 from functools import partial
-from typing import Dict, List
+from typing import Dict, List, Optional
 from unittest.mock import AsyncMock
 
 import httpx
@@ -55,7 +55,11 @@ def server(monkeypatch: pytest.MonkeyPatch) -> Dict:
             "jsonrpc": "2.0", "id": message["id"], "result": result,
         })
 
-    def client_factory(headers=None, timeout=None, auth=None):
+    def client_factory(
+        headers: Optional[Dict[str, str]] = None,
+        timeout: Optional[httpx.Timeout] = None,
+        auth: Optional[httpx.Auth] = None,
+    ) -> httpx.AsyncClient:
         """Preserve actual SDK headers, authentication and timeouts."""
         client = httpx.AsyncClient(
             headers=headers, timeout=timeout, auth=auth,
