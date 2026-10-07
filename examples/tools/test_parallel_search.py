@@ -77,8 +77,9 @@ def server(monkeypatch: pytest.MonkeyPatch) -> Dict:
 
 
 @pytest.mark.asyncio
-async def test_agent_dispatch_and_fetch(server: Dict,
-                                       monkeypatch: pytest.MonkeyPatch) -> None:
+async def test_agent_dispatch_and_fetch(
+    server: Dict, monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """A model-selected Legion tool returns useful output into memory."""
     provider = AsyncMock()
     provider.acomplete.return_value = ModelResponse(
@@ -102,7 +103,9 @@ async def test_agent_dispatch_and_fetch(server: Dict,
         ]
         assert "session_id" not in schema["parameters"]["properties"]
         await researcher.aprocess("Find asyncio docs")
-        outputs = [m for m in researcher.memory.messages if m.role == Role.TOOL]
+        outputs = [
+            m for m in researcher.memory.messages if m.role == Role.TOOL
+        ]
         assert len(outputs) == 1
         assert "https://docs.python.org" in outputs[0].content
         assert "async/await" in outputs[0].content
