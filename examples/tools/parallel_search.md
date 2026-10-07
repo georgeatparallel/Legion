@@ -20,8 +20,8 @@ python -m examples.tools.parallel_search "Find Python asyncio documentation" \
 The command calls the Legion tools directly and prints source URLs and excerpts.
 It needs no model credentials and does not run model inference. Fetch output
 also preserves any per-URL errors returned by the server. MCP errors propagate
-as Legion `ToolError`; HTTP requests time out after 30 seconds and tool responses
-after 60 seconds. Cancellation and connection cleanup use the MCP SDK's async
+as Legion `ToolError`; connection timeouts are 30 seconds and read/tool-response
+timeouts are 60 seconds. Cancellation and connection cleanup use the MCP SDK's async
 context managers. The SDK is pinned for compatibility with Legion's Pydantic
 version. Existing provider defaults and dependencies remain unchanged.
 
